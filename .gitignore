@@ -1,0 +1,19 @@
+#virtualenv stuff
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+pip-selfcheck.json
+
+#JetBrains stuff
+.idea
+
+**/*.pyc
+*/dist/*
+**/*.egg-info/
+.DS_STORE
