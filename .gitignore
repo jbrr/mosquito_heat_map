@@ -17,3 +17,6 @@ pip-selfcheck.json
 */dist/*
 **/*.egg-info/
 .DS_STORE
+__pycache__
+notes
+.env
