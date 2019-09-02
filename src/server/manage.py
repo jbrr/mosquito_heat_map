@@ -29,13 +29,19 @@ def dropdb():
 
 @manager.command
 def ingestiddata():
+    i = 0
     for filename in os.listdir('data/identification'):
         NeonIngestor(app, db, models, 'data/identification/' + filename).ingest_identification_data()
+        i += 1
+        app.logger.info('Completed file {} of {}'.format(i, os.listdir('data/identification')))
 
 @manager.command
 def ingestlocationdata():
+    i = 0
     for filename in os.listdir('data/location'):
         NeonIngestor(app, db, models, 'data/location/' + filename).ingest_location_data()
+        i += 1
+        app.logger.info('Completed file {} of {}'.format(i, os.listdir('data/location')))
 
 if __name__ == '__main__':
     manager.run()
