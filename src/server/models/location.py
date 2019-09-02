@@ -9,8 +9,6 @@ class Location(db.Model):
     site_id = db.Column(db.String())
     domain = db.Column(db.String())
     named_location = db.Column(db.String())
-    latitude = db.Column(db.String())
-    longitude = db.Column(db.String())
     elevation = db.Column(db.Float)
     point = db.Column(Geometry('POINT', srid=4326))
     nlcd_class_id = db.Column(db.ForeignKey('nlcd_class.id'))

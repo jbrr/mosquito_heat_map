@@ -20,11 +20,7 @@ class NeonIngestor():
                 loc = self.get_or_create(session, self.models['location'],
                     site_id=r['siteID'],
                     domain=r['domainID'],
-                    named_location=r['namedLocation'],
-                    latitude=None,
-                    longitude=None,
-                    state=None,
-                    country=None)
+                    named_location=r['namedLocation'])
 
                 spec = self.get_or_create(session, self.models['specimen'],
                     kingdom=r['kingdom'],
