@@ -13,6 +13,7 @@ from models.sub_sample import SubSample
 from models.specimen import Specimen
 from models.scientist import Scientist
 from models.laboratory import Laboratory
+from models.nlcd_class import NlcdClass
 
 models = {
     'location': Location,
@@ -20,7 +21,8 @@ models = {
     'sub_sample': SubSample,
     'specimen': Specimen,
     'scientist': Scientist,
-    'laboratory': Laboratory
+    'laboratory': Laboratory,
+    'nlcd_class': NlcdClass
 }
 
 @app.route('/')
