@@ -8,7 +8,7 @@ class NeonIngestor():
         self.models = models
         self.file_path = file_path
 
-    def import_csv(self):
+    def ingest_identification_data(self):
         data = []
         session = self.db.session()
         with open(self.file_path) as f:
@@ -20,11 +20,7 @@ class NeonIngestor():
                 loc = self.get_or_create(session, self.models['location'],
                     site_id=r['siteID'],
                     domain=r['domainID'],
-                    named_location=r['namedLocation'],
-                    latitude=None,
-                    longitude=None,
-                    state=None,
-                    country=None)
+                    named_location=r['namedLocation'])
 
                 spec = self.get_or_create(session, self.models['specimen'],
                     kingdom=r['kingdom'],
@@ -55,7 +51,30 @@ class NeonIngestor():
                     individual_count=self.handle_individual_count(r['individualCount']),
                     sample_id=samp[0].id,
                     specimen_id=spec[0].id)
+            except Exception as e:
+                self.app.logger.error('Row: {} not inserted because of error {}'.format(r, e))
 
+    def ingest_location_data(self):
+        data = []
+        session = self.db.session()
+        with open(self.file_path) as f:
+            reader = csv.DictReader(f)
+            data = [r for r in reader]
+
+        for r in data:
+            try:
+                nlcd = self.get_or_create(session, self.models['nlcd_class'],
+                    name=r['nlcdClass'])
+
+                point = 'SRID=4326;POINT({} {})'.format(r['decimalLatitude'], r['decimalLongitude'])
+                session.query(self.models['location']).\
+                    filter(self.models['location'].named_location == r['namedLocation']).\
+                    update({
+                        self.models['location'].elevation: self.handle_elevation(r['elevation']),
+                        self.models['location'].nlcd_class_id: nlcd[0].id,
+                        self.models['location'].point: point})
+
+                session.commit()
             except Exception as e:
                 self.app.logger.error('Row: {} not inserted because of error {}'.format(r, e))
 
@@ -74,6 +93,15 @@ class NeonIngestor():
         try:
             if individual_count:
                 return int(individual_count)
+            else:
+                return None
+        except ValueError:
+            return None
+
+    def handle_elevation(self, elevation):
+        try:
+            if elevation:
+                return float(elevation)
             else:
                 return None
         except ValueError:
