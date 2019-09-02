@@ -11,10 +11,21 @@ from models.location import Location
 from models.sample import Sample
 from models.sub_sample import SubSample
 from models.specimen import Specimen
+from models.scientist import Scientist
+from models.laboratory import Laboratory
+
+models = {
+    'location': Location,
+    'sample': Sample,
+    'sub_sample': SubSample,
+    'specimen': Specimen,
+    'scientist': Scientist,
+    'laboratory': Laboratory
+}
 
 @app.route('/')
 def hello_world():
-	return 'Hello World'
+    return 'Hello World'
 
 if __name__ == '__main__':
     app.run()

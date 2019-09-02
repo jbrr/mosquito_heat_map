@@ -1,4 +1,5 @@
 from app import db
+import datetime
 
 class Location(db.Model):
     __tablename__ = 'location'
@@ -9,19 +10,11 @@ class Location(db.Model):
     named_location = db.Column(db.String())
     latitude = db.Column(db.String())
     longitude = db.Column(db.String())
-    created_at = db.Column(db.DateTime())
-    updated_at = db.Column(db.DateTime())
-    samples = db.relationship('Sample')
-
-    def __init__(self, site_id, domain, named_location, latitude, longitude, created_at, updated_at, samples):
-        self.site_id = site_id
-        self.domain = domain
-        self.named_location = named_location
-        self.latitude = latitude
-        self.longitude = longitude
-        self.created_at = created_at
-        self.updated_at = updated_at
-        self.samples = samples
+    state = db.Column(db.String())
+    country = db.Column(db.String(), server_default='US')
+    created_at = db.Column(db.DateTime(), default=db.func.now())
+    updated_at = db.Column(db.DateTime(), onupdate=datetime.datetime.now)
+    samples = db.relationship('Sample', cascade='all,delete-orphan', backref='location')
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
