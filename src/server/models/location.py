@@ -13,7 +13,7 @@ class Location(db.Model):
     longitude = db.Column(db.String())
     elevation = db.Column(db.Float)
     point = db.Column(Geometry('POINT', srid=4326))
-    nlcd_class = db.Column(db.ForeignKey('nlcd_class.id'))
+    nlcd_class_id = db.Column(db.ForeignKey('nlcd_class.id'))
     county = db.Column(db.String())
     state = db.Column(db.String())
     country = db.Column(db.String())
