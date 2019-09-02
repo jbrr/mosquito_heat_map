@@ -16,7 +16,7 @@ def _make_context():
         app=app.app,
         db=app.db,
         NeonIngestor=NeonIngestor,
-        models=models
+        models=app.models
     )
 
 manager.add_command('db', MigrateCommand)
