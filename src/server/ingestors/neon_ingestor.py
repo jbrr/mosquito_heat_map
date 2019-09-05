@@ -66,7 +66,7 @@ class NeonIngestor():
                 nlcd = self.get_or_create(session, self.models['nlcd_class'],
                     name=r['nlcdClass'])
 
-                point = 'SRID=4326;POINT({} {})'.format(r['decimalLatitude'], r['decimalLongitude'])
+                point = 'SRID=4326;POINT({} {})'.format(r['decimalLongitude'], r['decimalLatitude'])
                 session.query(self.models['location']).\
                     filter(self.models['location'].named_location == r['namedLocation']).\
                     update({

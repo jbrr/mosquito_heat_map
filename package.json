@@ -1,0 +1,46 @@
+{
+  "name": "mosquito_heat_map",
+  "version": "0.0.1",
+  "description": "Mapping mosquito collection data",
+  "private": true,
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --open --mode development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbrr/mosquito_heat_map.git"
+  },
+  "author": "Jeff Ruane",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jbrr/mosquito_heat_map/issues"
+  },
+  "dependencies": {
+    "leaflet": "^1.5.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-leaflet": "^2.4.0",
+    "react-router-dom": "^5.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "prop-types": "^15.7.2",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0"
+  },
+  "homepage": "https://github.com/jbrr/mosquito_heat_map#readme"
+}
