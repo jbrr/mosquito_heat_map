@@ -7,7 +7,7 @@ from ingestors.neon_ingestor import NeonIngestor
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, 'src/server/migrations')
 manager = Manager(app)
 
 def _make_context():
@@ -15,7 +15,8 @@ def _make_context():
         app=app,
         db=db,
         NeonIngestor=NeonIngestor,
-        models=models
+        models=models,
+        migrate=migrate
     )
 
 manager.add_command('db', MigrateCommand)

@@ -9,15 +9,27 @@
 pyvenv.cfg
 .venv
 pip-selfcheck.json
+env
 
-#JetBrains stuff
+#Editor stuff
 .idea
+mosquito_heat_map.sublime-project
+mosquito_heat_map.sublime-workspace
 
+#OS
+.DS_STORE
+
+#Python
 **/*.pyc
 */dist/*
 **/*.egg-info/
-.DS_STORE
 __pycache__
-notes
+
+#Private
 .env
+notes
 data
+
+#JS
+node_modules
+dist

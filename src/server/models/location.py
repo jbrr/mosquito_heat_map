@@ -1,5 +1,5 @@
 from app import db
-from geoalchemy2 import Geometry
+from geoalchemy2 import Geometry, functions
 import datetime
 
 class Location(db.Model):
