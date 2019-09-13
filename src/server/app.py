@@ -39,5 +39,11 @@ def get_locations():
     geojson = Utils.to_geojson(locs)
     return jsonify(geojson)
 
+@app.route('/api/v0/leaderboards')
+def get_leaderboards():
+    leaderboards = Utils.get_leaderboards(models)
+    return jsonify(leaderboards)
+
+
 if __name__ == '__main__':
     app.run()

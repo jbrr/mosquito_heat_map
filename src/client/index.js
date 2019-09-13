@@ -1,9 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './router';
-import DrawMap from './components/map';
+import MainContainer from './containers/MainContainer';
+
+class AppContainer extends React.Component {
+  render() {
+    return(
+      <div>
+        <MainContainer />
+      </div>
+    )
+  }
+}
 
 ReactDOM.render(
-<DrawMap />,
+<AppContainer />,
 document.getElementById('app')
 )
