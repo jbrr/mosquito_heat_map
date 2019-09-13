@@ -9,6 +9,7 @@ Most dependencies are wrapped up in this repository, but not everything.
 * PostGIS Postgres extension (still trying to figure out how to add that extension programatically)
 * Raw data. You can download this on the [NEON website](https://data.neonscience.org/browse-data). You'll need to filter on "Organisms, Populations, and Communities", select "Mosquitoes sampled from CO2 traps". Download the expanded data set, then use the `NeonIngestor` to ingest files matching the `*mos_expertTaxonomistIDProcessed*` pattern for identification data, and `*mos_trapping*` for location data. NEON has a slick looking API as well, which might be useful for updating the dataset as more is published, but I didn't want to hit the API a million times for the first, historical ingest.
 
+
 ### Development
 There's a bit of weirdness. Hopefully I can get some of this ironed out at some pont.
 
