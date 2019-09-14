@@ -1,8 +1,8 @@
-from app import db
+from MhmServer.database import db
 from geoalchemy2 import functions as geo_func
 import json
 
-class Utils():
+class BusinessLogic():
 
     # https://tools.ietf.org/html/rfc7946
     @classmethod
@@ -27,10 +27,10 @@ class Utils():
         return response
 
     @classmethod
-    def get_leaderboards(cls, models):
+    def get_leaderboards(cls, laboratory, scientist, sub_sample):
         response = {}
-        response['byScientist'] = cls.__sum_sub_sample_individual_count(models['sub_sample'], models['scientist'])
-        response['byLaboratory'] = cls.__sum_sub_sample_individual_count(models['sub_sample'], models['laboratory'])
+        response['byScientist'] = cls.__sum_sub_sample_individual_count(sub_sample, scientist)
+        response['byLaboratory'] = cls.__sum_sub_sample_individual_count(sub_sample, laboratory)
         return response
         
 
