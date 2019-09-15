@@ -1,6 +1,7 @@
 from MhmServer.database import (Column, DateTime, Float, ForeignKey, func, Integer, Model, String, relationship)
-from geoalchemy2 import Geometry, functions
+from geoalchemy2 import Geometry
 import datetime
+
 
 class Location(Model):
     __tablename__ = 'location'

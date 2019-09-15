@@ -1,6 +1,7 @@
 from MhmServer.database import (Column, DateTime, func, Integer, Model, relationship, String)
 import datetime
 
+
 class NlcdClass(Model):
     __tablename__ = 'nlcd_class'
 

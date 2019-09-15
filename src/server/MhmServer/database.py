@@ -9,5 +9,3 @@ Integer = db.Integer
 Model = db.Model
 String = db.String
 relationship = db.relationship
-
-Column, DateTime, Float, ForeignKey, func, Integer, String, relationship

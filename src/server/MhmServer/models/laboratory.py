@@ -1,6 +1,7 @@
 from MhmServer.database import (Column, DateTime, Integer, func, Model, relationship, String)
 import datetime
 
+
 class Laboratory(Model):
     __tablename__ = 'laboratory'
 

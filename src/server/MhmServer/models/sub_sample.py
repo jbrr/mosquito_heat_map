@@ -1,6 +1,7 @@
 from MhmServer.database import (Column, DateTime, ForeignKey, func, Integer, Model)
 import datetime
 
+
 class SubSample(Model):
     __tablename__ = 'sub_sample'
 
