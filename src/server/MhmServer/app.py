@@ -4,13 +4,7 @@ import os
 from MhmServer import commands
 from MhmServer.extensions import (db, cors, migrate)
 from MhmServer.api import routes
-from MhmServer.models.laboratory import Laboratory
-from MhmServer.models.location import Location
-from MhmServer.models.nlcd_class import NlcdClass
-from MhmServer.models.sample import Sample
-from MhmServer.models.scientist import Scientist
-from MhmServer.models.specimen import Specimen
-from MhmServer.models.sub_sample import SubSample
+from MhmServer.models import (Laboratory, Location, NlcdClass, Sample, Scientist, Specimen, SubSample)
 
 
 def create_app(config_object=os.environ['APP_SETTINGS']):
