@@ -1,10 +1,13 @@
 import React from 'react'
+import { Transition, TransitionGroup } from 'react-transition-group';
 import { getLeaderboards } from '../../utils/Apis';
+import Loader from '../../components/Loader';
 
 class LeaderboardContainer extends React.Component {
   constructor(props) {
     super(props);
     this.displayEachRow = this.displayEachRow.bind(this);
+    this.displayLeaderboard = this.displayLeaderboard.bind(this);
     this.state = {
       leadersByPerson: [],
       leadersByLab: [],
@@ -31,23 +34,21 @@ class LeaderboardContainer extends React.Component {
 
   displayEachRow(data) {
     var listElements = data.map((item) => {
-      return <li>{item[0]}: {item[1]}</li>
+      // API returns ID, name, and count of mosquitos identified
+      // Cause React keeps harassing me about having a unique idenfier for each list element 🙄
+      return <li key={ item[0] }>{ item[1] }: { item[2] }</li>
     });
 
     return listElements;
   }
 
-  render() {
-    const isLoaded = this.state.isLoaded;
-    const error = this.state.error;
+  displayLeaderboard() {
     const leadersByPerson = this.state.leadersByPerson;
     const leadersByLab = this.state.leadersByLab;
     const leadersByPersonList = this.displayEachRow(leadersByPerson);
     const leadersByLabList = this.displayEachRow(leadersByLab);
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
+    if (this.state.error) {
+      return <div>Error: {this.state.error.message}</div>;
     } else {
       return(
         <div className='col-9 leaderboard-container' id='leaderboard'>
@@ -60,9 +61,20 @@ class LeaderboardContainer extends React.Component {
             {leadersByLabList}
           </ol>
         </div>
-      )
+      );
     }
   }
+
+  render() {
+    const isLoaded = this.state.isLoaded;
+    const display = this.state.isLoaded ? ['leaderboard', this.displayLeaderboard()] : ['loader', <Loader />];
+    return (
+      <TransitionGroup className='this-ol-map'>
+        <Transition key={ display[0] } in={ isLoaded } timeout={ 350 }>
+          { display[1] }
+        </Transition>
+      </TransitionGroup>
+    );  }
 }
 
 export default LeaderboardContainer;

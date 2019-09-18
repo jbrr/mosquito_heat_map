@@ -37,10 +37,11 @@ class BusinessLogic():
     @classmethod
     def __sum_sub_sample_individual_count(cls, sub_sample, join_model):
         return db.session.query(
+            join_model.id,
             join_model.name,
             db.func.sum(sub_sample.individual_count)
             .label('grouped_identifications')) \
         .join(join_model) \
-        .group_by(join_model.name) \
+        .group_by(join_model.name, join_model.id) \
         .order_by(db.desc('grouped_identifications')) \
         .all()

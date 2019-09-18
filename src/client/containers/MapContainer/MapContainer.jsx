@@ -1,4 +1,5 @@
 import React from 'react';
+import { Transition, TransitionGroup } from 'react-transition-group';
 import './styles.css';
 import 'leaflet_css';
 import 'leaflet_marker';
@@ -7,12 +8,14 @@ import 'leaflet_marker_shadow';
 import 'leaflet'
 import { Map, Marker, Popup, TileLayer, GeoJSON } from 'react-leaflet'
 import { getSubsiteLocations } from '../../utils/Apis';
+import Loader from '../../components/Loader';
 
 class MapContainer extends React.Component {
   constructor(props) {
     super(props)
+    this.displayMap = this.displayMap.bind(this)
     this.state = {
-      zoom: 5,
+      zoom: 6,
       isLoaded: false,
       error: null,
       geoJson: null
@@ -49,18 +52,15 @@ class MapContainer extends React.Component {
     }
   }
 
-  render() {
-    const isLoaded = this.state.isLoaded
-    const error = this.state.error
+  //TODO: This should be it's own component
+  displayMap() {
     // Middle of the United States
     const position = [39.8283, -98.5795]
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
+    if (this.state.error) {
+      return <div>Error: {this.state.error.message}</div>;
     } else {
       return (
-        <div className="col-9" id="map">
+        <div id="map">
           <Map center={position} zoom={this.state.zoom}>
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -75,6 +75,18 @@ class MapContainer extends React.Component {
         </div>
       );
     }
+  }
+
+  render() {
+    const isLoaded = this.state.isLoaded;
+    const display = this.state.isLoaded ? ['map', this.displayMap()] : ['loader', <Loader />];
+    return (
+      <TransitionGroup className='this-ol-map'>
+        <Transition key={ display[0] } in={ isLoaded } timeout={ 350 }>
+          { display[1] }
+        </Transition>
+      </TransitionGroup>
+    );
   }
 }
 
