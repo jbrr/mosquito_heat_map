@@ -1,5 +1,6 @@
 import React from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
+import PropTypes from 'prop-types';
 import './styles.css';
 import 'leaflet_css';
 import 'leaflet_marker';
@@ -8,17 +9,20 @@ import 'leaflet_marker_shadow';
 import 'leaflet'
 import { Map, Marker, Popup, TileLayer, GeoJSON } from 'react-leaflet'
 import { getSubsiteLocations } from '../../utils/Apis';
+import GeneraLayer from '../../components/GeneraLayer';
 import Loader from '../../components/Loader';
 
 class MapContainer extends React.Component {
   constructor(props) {
-    super(props)
-    this.displayMap = this.displayMap.bind(this)
+    super(props);
+    this.displayMap = this.displayMap.bind(this);
+    this.renderGeneraLayers = this.renderGeneraLayers.bind(this);
     this.state = {
       zoom: 6,
       isLoaded: false,
       error: null,
-      geoJson: null
+      locationGeoJson: null,
+      generaLayers: []
     };
   }
 
@@ -26,7 +30,7 @@ class MapContainer extends React.Component {
     getSubsiteLocations()
     .then(result => {
       this.setState({
-        geoJson: result.data,
+        locationGeoJson: result.data,
         isLoaded: true
       });
     })
@@ -34,8 +38,25 @@ class MapContainer extends React.Component {
       this.setState({
         isLoaded: true,
         error
-      })
-    })
+      });
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.layers && prevProps.layers != this.props.layers) {
+      var newGeneraLayers = this.props.layers.filter(layer => layer.layer === 'genera');
+      this.setState({
+        generaLayers: newGeneraLayers
+      });
+    }
+  }
+
+  renderGeneraLayers() {
+    if (this.state.generaLayers.length > 0) {
+      return this.state.generaLayers.map((layer) => (
+        <GeneraLayer key={layer.item.name} layer={layer} />
+      ));
+    }
   }
 
   onEachFeature(feature, layer) {
@@ -56,21 +77,19 @@ class MapContainer extends React.Component {
   displayMap() {
     // Middle of the United States
     const position = [39.8283, -98.5795]
+    const generaLayers = this.renderGeneraLayers();
+    console.log(generaLayers)
     if (this.state.error) {
       return <div>Error: {this.state.error.message}</div>;
     } else {
       return (
         <div id="map">
-          <Map center={position} zoom={this.state.zoom}>
+          <Map ref='map' center={position} zoom={this.state.zoom}>
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
             />
-            <GeoJSON
-              data={this.state.geoJson}
-              onEachFeature={this.onEachFeature}
-              style={this.getStyle}
-            />
+            { generaLayers }
           </Map>
         </div>
       );
@@ -88,6 +107,10 @@ class MapContainer extends React.Component {
       </TransitionGroup>
     );
   }
+}
+
+MapContainer.propTypes = {
+  layers: PropTypes.array
 }
 
 export default MapContainer;

@@ -20,7 +20,7 @@ def create_app(config_object=os.environ['APP_SETTINGS']):
 
 def register_extensions(app):
     db.init_app(app)
-    cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
+    cors.init_app(app, resources={"/api/*": {"origins": "*"}})
     migrate.init_app(app, db, 'src/server/MhmServer/migrations')
 
     return None

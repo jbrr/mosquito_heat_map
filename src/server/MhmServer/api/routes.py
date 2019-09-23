@@ -1,16 +1,15 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 
 from MhmServer.database import db
 from MhmServer.api.business_logic import BusinessLogic
-from MhmServer.models import (Laboratory, Location, Scientist, SubSample)
+from MhmServer.models import (Laboratory, Location, Sample, Scientist, Specimen, SubSample)
 
 blueprint = Blueprint('routes', __name__, url_prefix='/api/v0')
 
 
 @blueprint.route('/locations')
 def get_locations():
-    locs = db.session.query(Location).all()
-    geojson = BusinessLogic.to_geojson(locs)
+    geojson = BusinessLogic.get_locations(Location)
     return jsonify(geojson)
 
 
@@ -18,3 +17,13 @@ def get_locations():
 def get_leaderboards():
     leaderboards = BusinessLogic.get_leaderboards(Laboratory, Scientist, SubSample)
     return jsonify(leaderboards)
+
+@blueprint.route('/genera')
+def get_genera():
+    genera = BusinessLogic.get_genera(Specimen)
+    return jsonify(genera)
+
+@blueprint.route('/genera/<name>')
+def get_genus_distribution(name):
+    genus_distribution = BusinessLogic.get_by_genus(Location, Sample, Specimen, SubSample, name)
+    return jsonify(genus_distribution)
